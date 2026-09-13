@@ -1,0 +1,13 @@
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# Credentials and local configuration must never be committed
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
