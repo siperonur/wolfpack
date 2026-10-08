@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">WolfPack functional architecture</title>
+  <desc id="desc">Human direction sets objectives and authority. Desktop, mobile, and messaging interfaces connect to the shared XO runtime. XO uses permitted tools and exchanges information with cognitive resources and durable project context. This is a responsibility model, not a deployment map.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#71c9de"/></marker>
+  </defs>
+  <rect width="1200" height="620" rx="20" fill="#101b27"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="44" y="48" font-size="17" font-weight="700" fill="#89d7e8" letter-spacing="2">ONE XO, MANY WINDOWS</text>
+    <text x="44" y="81" font-size="22" fill="#ecf2f7">Different interfaces. Shared execution. Deliberate context.</text>
+    <g fill="none" stroke="#71c9de" stroke-width="3" marker-end="url(#arrow)">
+      <path d="M 601 197 L 601 247"/>
+      <path d="M 330 307 L 442 307"/>
+      <path d="M 760 307 L 861 307"/>
+      <path d="M 601 367 L 601 399 L 305 399 L 305 457" marker-start="url(#arrow)"/>
+      <path d="M 663 367 L 663 416 L 895 416 L 895 457" marker-start="url(#arrow)"/>
+    </g>
+    <g stroke="#354c62" stroke-width="2" fill="#192938">
+      <rect x="394" y="119" width="414" height="78" rx="12"/>
+      <rect x="44" y="247" width="286" height="120" rx="12"/>
+      <rect x="442" y="247" width="318" height="120" rx="12" fill="#21394b" stroke="#71c9de"/>
+      <rect x="861" y="247" width="295" height="120" rx="12"/>
+      <rect x="105" y="457" width="400" height="106" rx="12"/>
+      <rect x="695" y="457" width="400" height="106" rx="12"/>
+    </g>
+    <g fill="#f0f6fa" text-anchor="middle" font-size="25" font-weight="700">
+      <text x="601" y="151">Human direction</text>
+      <text x="187" y="288">Interfaces</text>
+      <text x="601" y="288">XO / agent harness</text>
+      <text x="1008" y="288">Permitted tools</text>
+      <text x="305" y="494">Cognitive resources</text>
+      <text x="895" y="494">Durable project context</text>
+    </g>
+    <g fill="#b4c5d4" text-anchor="middle" font-size="21">
+      <text x="601" y="179">Objectives · boundaries · decisions</text>
+      <text x="187" y="323">Desktop · mobile</text>
+      <text x="187" y="349">Messaging</text>
+      <text x="601" y="323">Shared assistant runtime</text>
+      <text x="601" y="349">Execution and verification</text>
+      <text x="1008" y="323">Files · browser · Git</text>
+      <text x="1008" y="349">Approved workflows</text>
+      <text x="305" y="530">Models and providers</text>
+      <text x="895" y="530">Decisions · source · operating knowledge</text>
+    </g>
+    <text x="44" y="595" fill="#91a5b7" font-size="17">Functional relationships only — deployment details remain private.</text>
+  </g>
+</svg>

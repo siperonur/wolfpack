@@ -6,7 +6,7 @@ Use the smallest mechanism that solves a demonstrated problem. New services, dat
 
 ## 2. Explicit context
 
-Machines, repositories, identities, data classes, and authority boundaries are named explicitly. “The server,” “the agent,” or “the repo” is insufficient when several exist.
+Machines, repositories, identities, data classes, and authority boundaries must be distinguishable. Internal operating records identify actual assets; public explanations use functional roles without disclosing deployment identifiers.
 
 ## 3. Observable outcomes
 
@@ -14,7 +14,7 @@ AI narration is not evidence. Filesystem state, Git refs, configuration reads, p
 
 ## 4. Bounded autonomy
 
-Commander authorizes objectives and boundaries; XO performs routine in-scope execution. Escalation is reserved for ambiguity, destructive action, identity or credential changes, material risk, authority gaps, or changed intent.
+The owner authorizes objectives and boundaries; XO performs routine in-scope execution. Escalation is reserved for ambiguity, destructive action, identity or credential changes, material risk, authority gaps, or changed intent.
 
 Bounded autonomy is intended to reduce human clerical work without erasing human authority.
 
@@ -64,5 +64,5 @@ A proposed component should answer:
 8. How is correct operation proved?
 9. What does it cost?
 10. Does Pi or an existing component already solve the need?
-11. Does it reduce Commander workload?
+11. Does it reduce the owner's workload?
 12. How painful is it to remove or replace?

@@ -1,67 +1,47 @@
 # Security model
 
-WolfPack is a personal engineering environment, not a classified or safety-critical system. Its security model aims for practical least privilege, visible human control at sensitive boundaries, and recovery from realistic failures.
+WolfPack's security approach is practical: limit unnecessary access, separate responsibilities, retain human control at sensitive boundaries, and understand how important state can be recovered.
 
-## Security objectives
+Public explanations describe the design, not the operational deployment. Functional roles are enough to discuss the architecture without publishing machine identifiers, addresses, accounts, or access instructions.
 
-- Keep credentials and authentication state out of Git and public documentation.
-- Prevent an external transport from becoming an unrestricted shell.
-- Keep machine reachability separate from modification authority.
-- Limit delegated Git identities to their intended repository operations.
-- Preserve human control over account recovery and strong authentication.
-- Keep public, private operational, and local-only data deliberately separated.
-- Make consequential actions and recovery outcomes observable.
+## Separate interaction from authority
 
-## Trust boundaries
+Access to an interface does not grant every capability of the host behind it. Conversational access, bounded browser interaction, Git publication, and deliberate administration have different responsibilities and should use appropriately scoped identities.
 
-### Human authentication
+Network reachability is only connectivity. Modification authority depends on the identity and the approved work.
 
-Passwords, MFA, passkeys, hardware keys, recovery codes, CAPTCHA, and legal attestations remain Commander interactions. XO may navigate up to the boundary but must not request, inspect, copy, or retain those values.
+## Keep authentication human-controlled
 
-### Machine authority
+Passwords, MFA, passkeys, recovery material, CAPTCHA, and personal attestations remain direct human actions. XO may prepare a workflow and navigate to a boundary without taking custody of authentication values.
 
-Bastion, Command, Overwatch, Scout, and Raider have different responsibilities. Connectivity does not imply authorization. Normal interaction identities are separated from broader administration paths where practical.
+Credentials and session state stay outside repositories and public evidence. A private repository is not automatically suitable custody for secrets.
 
-### Messaging
+## Give transports narrower responsibilities
 
-Messaging is an external transport. Accepted messages are allowlisted, validated, represented as bounded envelopes, and correlated with responses. Token custody is separated from the general assistant runtime. The transport does not expose a public webhook, general command execution, or a second XO.
+Messaging validates allowlisted input, exchanges bounded envelopes, and associates responses with requests. Its token custody is separated from the assistant process; it does not receive the assistant's Git or session authority.
 
-### Browser control
+Browser interaction is visible and operator-started, using a dedicated environment. Authorization applies to the workflow, not to any account or page that happens to be reachable.
 
-Browser capability is visible and operator-started. It uses a dedicated profile and narrow temporary connection. Credentials and human-verification challenges stay with Commander. A click is not treated as proof of an external outcome.
+## Classify data deliberately
 
-### Git and publication
+- **Public:** architecture, selected engineering material, and examples with explanatory value.
+- **Private:** operational configuration, internal runbooks, personal work records, and detailed evidence.
+- **Protected authentication state:** credentials, private keys, cookies, tokens, and recovery secrets in their appropriate custody.
 
-The operational repository remains private and locally authoritative. Its private GitHub mirror is non-authoritative. The public repository was initialized independently so sensitive operational ancestry was never imported and then “cleaned up.”
+Publication considers combinations of details, not just individual secret patterns. Screenshots, links, filenames, and prose can reveal more together than they do separately. `.gitignore` is a convenience, not a security boundary.
 
-## Data classification
+## Verify boundaries and recovery
 
-### Public
+Security checks exercise both the intended operation and relevant denied operations. Publication includes content review and repository-history considerations. Recovery uses standard formats and disposable restoration where appropriate.
 
-Public architecture, engineering rationale, honest status, safe diagrams, selected examples, limitations, and roadmap.
+Independent copies matter when they escape the original failure domain. Freshness and the scope of what was restored matter just as much as the existence of another copy.
 
-### Private
+## Practical trade-offs
 
-Operational configuration, detailed topology, internal runbooks, ordinary personal records, private logs, and evidence that does not belong in public.
+Cloud cognition processes deliberately supplied content outside the purely local environment. External messaging and hosting providers introduce their own availability and account dependencies. Privileged host administration remains a powerful boundary.
 
-### Local-only protected state
+Those trade-offs are evaluated in context rather than hidden behind a claim of perfect isolation. Access controls, sensible maintenance, protected custody, and recovery remain necessary even when public disclosure is careful.
 
-Passwords, tokens, private keys, session and cookie stores, recovery codes, authentication databases, and equivalent secrets. These do not leave their approved custody merely because a private repository exists.
+## Reporting a concern
 
-## Verification approach
-
-Security work uses both positive and negative checks. Examples include verifying that an intended operation succeeds while proving that the same identity cannot access unrelated credentials, administrative commands, runtime sessions, or repository modifications.
-
-Repository publication adds content and reachable-history review, sensitive-pattern scanning, ref inspection, anonymous-access checks, and comparison of authoritative and mirrored commit IDs.
-
-## Known limitations
-
-- A sufficiently privileged host administrator can access local runtime state.
-- Cloud model use means intentionally supplied content is processed outside the purely local machine boundary.
-- GitHub Free does not provide every advanced private-repository security or branch-control feature.
-- Pattern scanners reduce risk but cannot prove that arbitrary prose contains no sensitive information.
-- Human judgment remains necessary for privacy classification and consequential external actions.
-
-## Reporting a vulnerability
-
-Please follow the instructions in [SECURITY.md](../SECURITY.md). Do not place credentials, private operational details, or exploit material in a public issue.
+See [SECURITY.md](../SECURITY.md). Do not include credentials or private operational details in a public issue.

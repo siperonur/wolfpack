@@ -1,175 +1,86 @@
 <p align="center">
-  <img src="assets/WolfPack_GitHub_Avatar.png" alt="WolfPack logo" width="220">
+  <img src="assets/WolfPack_Header.png" alt="WolfPack — One XO, many windows. Human direction, machine cognition, checked outcomes." width="100%">
 </p>
 
 # WolfPack
 
-WolfPack is a personal, multi-machine AI and automation environment built around one durable supervisory assistant identity—**XO**—rather than around a particular model, provider, interface, session, or computer. It explores how a human can delegate bounded technical and real-world missions to an AI operating environment while retaining authority, preserving meaningful state, separating privileges, and requiring observable evidence for consequential actions.
+**One XO, many windows.**
+
+[In practice](#the-project-in-practice) · [Architecture](docs/architecture.md) · [Selected work](docs/engineering-work.md) · [Roadmap](docs/roadmap.md)
+
+WolfPack is my personal AI and automation project: an operating environment for getting useful work done with machine cognition across computers, tools, and interfaces.
+
+I'm [Onur Siper](https://github.com/siperonur). My background in technical delivery, application management, and service ownership shapes how I approach the project: make responsibilities clear, understand dependencies, control unnecessary complexity, and follow through until the work is actually complete.
 
 > **Minimal mechanism. Explicit context. Observable outcomes.**
 
-## Why this project exists
+## The idea
 
-Most AI assistants are experienced as disposable chat sessions. Useful engineering work, however, spans machines, interfaces, tools, changing models, interruptions, security boundaries, and decisions that must remain inspectable later.
+Useful work rarely fits inside one conversation. It moves between devices, documents, applications, and decisions. WolfPack explores how an assistant can follow that work without losing its context—or acquiring unlimited authority along the way.
 
-WolfPack explores a different operating model:
+At its center is **XO**, short for **Executive Officer**. The name borrows from the relationship between a commander who sets the mission and an executive officer who organizes its execution. In WolfPack, I define the objectives and boundaries; XO translates them into practical steps, carries out approved work, and checks the result.
 
-```text
-discuss → decide → authorize objective and boundaries → execute → verify → report evidence
-```
+XO is the supervisory role, not a particular model or chat window. Models provide cognition; the agent harness provides execution; project-owned context preserves decisions and operating knowledge between conversations.
 
-The goal is not unrestricted autonomy. The goal is a practical environment in which routine, approved work can be completed without turning the human operator into a keyboard peripheral, while ambiguous, destructive, security-sensitive, or identity-changing decisions return to the human.
+## The project in practice
 
-## One XO, many windows
+The operating foundation brings together:
 
-**XO** is the persistent supervisory role in WolfPack. XO is conceptually separate from:
+- **Desktop, mobile, and messaging access** to the same assistant runtime, so changing an interface does not mean starting the work again.
+- **Text and file interaction through Telegram**, with a restricted transport and responses tied to the relevant conversation.
+- **Visible, operator-started browser workflows** for approved research and interaction, leaving authentication and personal attestations with the human.
+- **Git-backed project context and recovery**, using versioned decisions, runbooks, and tested repository restoration rather than relying on conversation history alone.
 
-- the model performing an inference;
-- the provider serving that model;
-- the Pi agent harness currently hosting the interaction;
-- the runtime machine;
-- a terminal, browser, Telegram conversation, or other interface;
-- an individual context window or session.
+A Job Search research workflow put these pieces together: I started from mobile messaging, XO evaluated public opportunities against private career context, and I continued on a portable workstation with the recommendations intact. A skills gap and a closed advertisement became recorded decisions rather than reasons to repeat the research.
 
-Authorized devices and transports are windows into the same XO:
+[Explore the engineering work →](docs/engineering-work.md)
 
-> **One XO, many windows.**
+## How the pieces fit
 
-Changing windows should not create a second assistant identity, duplicate authority, or discard the project's durable operating context.
+![Functional architecture: human direction sets scope; interfaces connect to XO; permitted tools, cognitive resources, and durable context support the work.](assets/WolfPack_Architecture.svg)
 
-## Human and XO responsibilities
+These are functional roles, not a map of the deployment. The important distinction is between talking to the assistant, giving it authority, and maintaining the state it needs to work responsibly.
 
-WolfPack calls the human owner **Commander**. These labels describe an authority model, not a fictional organization.
+Persistence comes from deliberately maintained context. It does not depend on pretending that one conversation can remember everything forever.
 
-**Commander:**
+[Architecture](docs/architecture.md) · [Operating model](docs/operating-model.md)
 
-- defines desired outcomes and boundaries;
-- retains authority over destructive, security-sensitive, identity, credential, recovery, financial, and scope-changing decisions;
-- handles passwords, MFA, passkeys, CAPTCHA, and legal attestations directly;
-- resolves genuinely ambiguous product or risk decisions.
+## Engineering, not reinvention
 
-**XO:**
+WolfPack uses **Pi** as its current agent harness, existing models for cognition, **Telegram** for messaging, and standard operating-system, connectivity, and **Git** primitives for the surrounding environment.
 
-- translates approved intent into bounded operational steps;
-- checks current project context and live system facts;
-- chooses the smallest sufficient mechanism;
-- executes routine in-scope work where authority exists;
-- verifies files, Git state, configuration, runtime behavior, and external outcomes observably;
-- stops or escalates when authority, evidence, safety, or scope is insufficient;
-- promotes important decisions and state out of volatile conversation context.
+The project-specific work sits around those foundations: the operating contract, small integrations, privilege boundaries, context discipline, and verification procedures. Choosing what not to build is part of the engineering.
 
-## Architecture at a glance
+The Household use case illustrates this. An early custom approach did not meet the project's reliability requirements. I adopted **Home Assistant** as the native household foundation, simplifying the implementation while preserving the intention to connect XO later as a language and coordination interface.
 
-WolfPack assigns explicit conceptual roles to its machines:
+That division lets the native platform own lists, calendar state, and reminder mechanics. The intended contribution of XO is interpretation and coordination—not rebuilding those mechanics around a model.
 
-| Role | Purpose |
-|---|---|
-| **Command** | Infrastructure and authoritative operational Git source |
-| **Overwatch** | Persistent XO runtime and replaceable agent harness |
-| **Bastion** | Trusted operator and administration workstation |
-| **Scout** | Portable Commander and bounded reconnaissance client |
-| **Raider** | Mobile Commander interface |
+[Household: a simpler foundation for XO](docs/engineering-work.md#household-a-simpler-foundation-for-xo)
 
-The names make trust and responsibility boundaries easy to discuss. Network reachability does not imply permission, and a working copy does not become authoritative merely because it is convenient.
+## What I'm exploring next
 
-```mermaid
-flowchart LR
-    C[Commander]
-    B[Bastion]
-    S[Scout]
-    R[Raider]
-    T[Restricted messaging transport]
-    O[Overwatch<br/>persistent XO runtime]
-    M[Replaceable models<br/>and providers]
-    G[Command<br/>authoritative operational Git]
+The next questions are practical: how to connect XO to useful native systems, improve durable context, and select cognitive resources without increasing operating cost and complexity unnecessarily.
 
-    C --> B
-    C --> S
-    C --> R
-    C --> T
-    B --> O
-    S --> O
-    R --> O
-    T --> O
-    O --> M
-    O --> G
-```
+Temporary cognitive workers and automated resource selection remain possible directions. They should earn their place through a useful task, not through an elaborate agent roster.
 
-See [Architecture](docs/architecture.md) for the boundaries behind this view.
+I also plan to discuss selected use cases through [**Signals**](https://signalsbyonursiper.substack.com/)—connecting opinions about machine cognition to actual decisions, implementations, and lessons. GitHub will hold the technical reference; the writing can explore why a choice mattered.
 
-## Evidence-based execution
+## Explore further
 
-WolfPack treats narration and execution as different things. A tool saying “done,” including an AI tool, does not prove that a file changed, a command ran, a repository was published, or an external transaction completed.
-
-Meaningful work follows:
-
-1. **Intent** — state the expected change.
-2. **Action** — perform the bounded operation.
-3. **Observable verification** — inspect the resulting state independently.
-4. **Reconciliation** — update durable project context when the operational state materially changed.
-
-The strength of verification is proportional to risk. A text extraction may need source checking; a repository publication needs ref and visibility checks; security and recovery work needs independent evidence and failure-path testing.
-
-## Security and privilege philosophy
-
-WolfPack uses practical privilege separation rather than assuming a single all-powerful agent account.
-
-- Credentials and machine-local authentication state stay outside canonical repositories.
-- External transports are treated as untrusted input boundaries.
-- Authentication, MFA, CAPTCHA, and recovery operations remain human-controlled.
-- Delegated identities receive the narrowest useful permissions.
-- Browser operation is visible, bounded, and operator-started.
-- High-impact changes require explicit authorization.
-- Private operational details and recovery material are separated from public project documentation.
-- Removal and recovery paths are part of component design.
-
-See [Security model](docs/security-model.md).
-
-## Models are cognitive resources
-
-Models and providers are replaceable cognitive resources, not the identity of XO. Selection should eventually reflect task difficulty, risk, tool support, latency, quota, cost, privacy, and reversibility.
-
-WolfPack does **not** currently operate a persistent multi-agent organization. A possible future direction is for XO to commission short-lived, tightly scoped cognitive workers for specific subtasks, then verify and integrate their results. That remains an architectural candidate, not an implemented production capability.
-
-## Git-backed state
-
-Operational project context, architecture, runbooks, selected implementation, and append-only historical checkpoints are maintained in Git. The local Command repository remains authoritative for operational WolfPack. A private GitHub repository provides an off-machine mirror, not a replacement authority.
-
-This public repository has a separate root and independent history. It contains WolfPack's public architecture, engineering documentation, and—when deliberately selected—safe implementation material. Private operational configuration, credentials, recovery material, personal data, and sensitive infrastructure details are maintained separately.
-
-## Current status
-
-WolfPack is an active personal engineering project. Its first operational baseline is complete, including:
-
-- a persistent XO runtime using stock Pi as the current replaceable harness;
-- multiple workstation, mobile, and messaging windows into the same XO;
-- an authoritative local Git source with independent recovery copies and a private off-machine mirror;
-- restricted Git publication authority with observable ref verification;
-- a privilege-separated messaging transport for correlated text and file interaction;
-- an operator-started, visible browser-control path that leaves credentials and human-verification boundaries with Commander;
-- recovery and continuity runbooks tested through disposable restoration;
-- cross-interface continuity exercised through bounded real-world workflows.
-
-These results demonstrate an operating foundation, not a finished general-purpose autonomous system.
-
-## Current limitations
-
-- XO still depends on the availability of its current runtime and harness, even though both are intended to be replaceable.
-- Durable memory requirements are not fully resolved; Git-backed context is deliberate state, not a complete memory system.
-- Cognitive worker delegation and automatic model routing are design directions, not implemented WolfPack components.
-- Browser capability is intentionally narrow and operator-started, not unattended web automation.
-- Public implementation material is being curated from first principles rather than copied from the private operational repository.
-- WolfPack is a personal project and does not claim production, enterprise, or safety-critical readiness.
-
-## Documentation
-
+- [Selected engineering work](docs/engineering-work.md)
 - [Architecture](docs/architecture.md)
-- [Design principles](docs/design-principles.md)
 - [Operating model](docs/operating-model.md)
+- [Design principles](docs/design-principles.md)
 - [Security model](docs/security-model.md)
 - [Roadmap](docs/roadmap.md)
-- [Security reporting](SECURITY.md)
+- [Professional portfolio](https://portfolio.onursiper.chatgpt.site/)
 
-## License
+This repository contains curated public documentation and case studies. The private operational environment is maintained separately; this is not a packaged installation of WolfPack.
+
+## Project information
+
+Created and maintained by **Onur Siper**, with XO carrying out authorized implementation and verification work.
+
+For security concerns, see [SECURITY.md](SECURITY.md).
 
 No open-source license has been selected. Copyright remains with the repository owner; absence of a license does not grant permission for unrestricted reuse, modification, or redistribution.

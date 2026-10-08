@@ -1,69 +1,54 @@
 # Operating model
 
-WolfPack combines natural-language intent with explicit authority and evidence requirements.
+WolfPack starts with an objective, not a list of commands the owner must type. XO turns approved intent into practical work while keeping decisions, authority, and evidence connected.
 
-## Mission lifecycle
+## From intent to result
 
-```mermaid
-flowchart LR
-    A[Commander intent] --> B[Orient on durable context]
-    B --> C[Verify live facts]
-    C --> D{Authority and scope clear?}
-    D -- No --> E[Clarify or escalate]
-    D -- Yes --> F[Execute smallest bounded step]
-    F --> G[Verify resulting state]
-    G --> H{Outcome proved?}
-    H -- No --> I[Investigate, retry safely, or stop]
-    H -- Yes --> J[Reconcile durable state]
-    J --> K[Report evidence]
+```text
+discuss → decide → authorize boundaries → execute → verify → retain useful context
 ```
 
-## Commander authority
+An approved objective is an execution envelope, not permission to do anything that might help. Within it, XO should handle routine steps rather than send avoidable clerical work back to the human.
 
-Commander defines the outcome and risk envelope. Explicit approval is required when work materially changes scope, creates destructive or difficult-to-reverse effects, changes credentials or identity, threatens recovery, incurs unapproved cost, or crosses a trust boundary without existing authority.
+When the objective, risk, or required authority changes materially, the work returns to a human decision. Destructive operations, identity and credential changes, recovery-sensitive actions, and unapproved costs need deliberate approval.
 
-Commander directly handles passwords, MFA, passkeys, security keys, CAPTCHA, recovery secrets, and legal attestations.
+## Human and assistant responsibilities
 
-## XO responsibility
+The owner sets direction and owns consequential decisions. Passwords, MFA, CAPTCHA, recovery secrets, and personal legal attestations remain direct human actions.
 
-Within an approved mission, XO should not return avoidable clerical work to Commander. XO is responsible for:
+XO is responsible for understanding the objective, checking relevant project context and live facts, choosing a proportionate mechanism, performing approved work, and inspecting the result. Uncertainty is something to resolve or report, not a gap to fill with confident narration.
 
-- translating the request into bounded steps;
-- selecting proportionate tools and reasoning effort;
-- checking authoritative project context;
-- distinguishing documented state from live telemetry;
-- preserving unexpected local work;
-- making and validating ordinary in-scope changes;
-- reporting uncertainty rather than filling gaps with assumptions;
-- maintaining a known stopping or rollback point.
+## Checking the result
 
-## Evidence hierarchy
+Different claims need different evidence:
 
-Evidence depends on the claim:
-
-| Claim | Suitable evidence |
+| Work | Useful verification |
 |---|---|
-| File changed | direct read, metadata, checksum, and reviewed diff |
-| Git publication succeeded | remote ref inspection and commit equality |
-| Service works | process/service state plus an end-to-end behavior check |
-| Recovery works | restoration into a disposable target and content/ref comparison |
-| External action completed | target-system confirmation, not the initiating click |
-| Security boundary holds | positive function test plus relevant denial tests |
+| File or configuration change | Direct readback and reviewed diff |
+| Git publication | Remote ref inspection and commit comparison |
+| Service integration | End-to-end behavior plus relevant process/state checks |
+| Security boundary | Intended function plus relevant denial tests |
+| Recovery | Disposable restoration and content/ref comparison |
+| External action | Target-system confirmation rather than the initiating click |
 
-Documentation is authoritative project context but not live runtime telemetry. A remembered success is historical evidence, not proof of current operation.
-
-## Git discipline
-
-Operational Git work begins by fetching the authoritative remote and inspecting the working tree, local branch, remote branch, and divergence. Dirty or divergent state is preserved and investigated rather than silently reset.
-
-Before publication, XO reviews the diff, reruns relevant verification, fetches current canonical state, and proves the update is a normal fast-forward. Force-pushing canonical history is outside routine authority.
+Verification should be proportional to the consequence. The purpose is to establish the result, not surround every small task with ceremony.
 
 ## Context and continuity
 
-Conversation context is temporary cognition. Material decisions and verified state are promoted into concise durable files. Session handoffs transfer context and constraints; they do not grant new mission authority by themselves.
+Conversation is working memory. Important decisions, rationale, and verified state are deliberately retained in portable project-owned records.
 
-## Cognitive delegation
+The records help a fresh conversation orient itself, but they are not live telemetry. Volatile facts—such as Git state or whether a service is running—are checked when they matter.
 
-WolfPack may later let XO commission ephemeral workers for narrowly described tasks. A worker would receive only the necessary objective, context, tools, data, authority, budget, and evidence requirements. Its output would be input to XO—not proof—and XO would remain responsible for verification and integration.
+Changing devices changes the interface. It should not create another authority or an unrelated owner of task state.
 
-This capability is not currently implemented as a WolfPack component.
+## Change discipline
+
+Inspect the actual state, make a bounded change, check the outcome, look for side effects, and retain material context. Keep a known stopping or recovery point.
+
+Git work follows the same pattern: fetch, inspect dirt and divergence, preserve unexpected work, review the proposed changes, and verify ordinary publication. Canonical history is not rewritten as a routine repair shortcut.
+
+## Future cognitive delegation
+
+Temporary workers could support narrow reasoning tasks without becoming separate assistants or persistent personalities. They would receive only the necessary context and authority; XO would remain responsible for verification and integration.
+
+That is a direction for evaluation, not an additional operating layer already in use.

@@ -1,120 +1,62 @@
 # Architecture
 
-WolfPack separates identity, cognition, runtime, interfaces, durable state, and authority. The objective is continuity without concentrating every capability into one account or service.
+WolfPack separates human direction, assistant execution, cognitive resources, interfaces, and durable state. The aim is to make useful delegation possible without turning every connected component into an equally privileged part of the system.
 
-## Logical layers
+## Functional roles
 
-```mermaid
-flowchart TB
-    H[Human authority<br/>Commander]
+| Role | Responsibility |
+|---|---|
+| **Operator environment** | Deliberate administration, approval, and recovery work |
+| **Desktop and portable clients** | Access to the shared assistant and bounded interactive workflows |
+| **Mobile interface** | Conversation, files, notifications, and phone-appropriate interaction |
+| **Assistant runtime** | The shared XO environment and current agent harness |
+| **Infrastructure host** | Hosting and the authoritative private operational Git source |
 
-    subgraph I[Authorized interfaces]
-      B[Bastion]
-      S[Scout]
-      R[Raider]
-      X[Restricted messaging]
-    end
+These roles explain the design. Public documentation does not map them to machine names, addresses, accounts, or access rules.
 
-    subgraph O[Supervisory operating layer]
-      XO[One persistent XO identity]
-      P[Pi<br/>current replaceable harness]
-    end
+## XO, harness, and cognition
 
-    subgraph C[Cognitive resources]
-      M1[Current model/provider]
-      M2[Future replaceable resources]
-    end
+**XO** is the supervisory operating role. **Pi** is the current agent harness. Models and providers supply cognition.
 
-    subgraph D[Durable and operational state]
-      G[Command-authoritative Git]
-      L[Machine-local private state]
-      K[Protected credential custody]
-      BAK[Independent recovery copies]
-    end
+Keeping those concepts distinct allows a model or interface to change without redefining the assistant's responsibilities or making it the new owner of project knowledge. The runtime is still a real dependency; separating concepts makes replacement and recovery designable rather than automatic.
 
-    H --> I
-    I --> XO
-    XO --> P
-    P --> M1
-    P -. candidate .-> M2
-    XO --> G
-    XO --> L
-    P -. least necessary access .-> K
-    G --> BAK
-```
+## Interfaces and execution
 
-The diagram is conceptual. Public documentation deliberately omits addresses, account names, access-control internals, key material, and recovery details.
+Desktop, portable, mobile, and messaging interfaces connect to the shared runtime. They carry intent and return results; they do not create separate assistants or independently grant new authority.
 
-## Machine roles
+The Telegram integration separates transport from assistant execution. Browser interaction uses a dedicated, visible, operator-started environment. Authentication and personal attestations remain direct human actions.
 
-### Command
+![WolfPack functional architecture: human direction, shared interfaces and runtime, permitted tools, cognitive resources, and durable project context.](../assets/WolfPack_Architecture.svg)
 
-Command is the infrastructure and operational Git authority. Its repository is the source of truth for private operational WolfPack state. Publishing a mirror elsewhere does not silently transfer that authority.
+This is a responsibility model, not a network diagram. Authority is attached to the approved work and the identities performing it, not inferred from connectivity.
 
-### Overwatch
+## Durable state
 
-Overwatch hosts the long-lived XO environment and current Pi harness. It has a non-authoritative working copy and narrowly delegated abilities required for approved work. It is a separate trust boundary from Command.
+Different state needs different treatment:
 
-### Bastion
+- **Project context:** architecture, decisions, runbooks, source, and selected verified state, maintained in Git.
+- **Private work records:** personal or operational material kept outside the public project.
+- **Runtime history:** useful supporting context, not the sole definition of XO or its memory.
+- **Credentials and authentication:** protected machine-local custody, separate from repository content.
 
-Bastion is the trusted human-operated workstation for administration and interactive work. Normal XO access and deliberate administration use distinct identities and authority paths.
+Useful context is promoted deliberately. Saving every conversation indiscriminately is not the same as having a useful memory system.
 
-### Scout
+## Repository responsibilities
 
-Scout is a portable client for the same XO and can provide bounded, operator-started reconnaissance. It is not a second XO runtime and does not receive broad unattended administration rights.
+The private, locally controlled operational repository is authoritative. Its private GitHub mirror is an off-machine recovery copy, not a second source of truth.
 
-### Raider
+This public repository has an independent history. It holds deliberately authored architecture, case studies, and selected technical material rather than an exported operational deployment.
 
-Raider is a mobile interface for conversation, notifications, and other phone-appropriate interaction. It is not treated as a general-purpose server.
+Standard Git bundles and mirrors support repository recovery. Runtime reconstruction has its own configuration and reauthentication requirements; repository restoration alone does not recreate the running system.
 
-## Identity versus implementation
+## Native systems and future integration
 
-XO is a supervisory identity and operating role. It is not equivalent to:
+The Household use case uses Home Assistant for deterministic state and scheduling. The intended future XO interface would interpret and coordinate approved requests while leaving those mechanics with the native platform.
 
-- Pi;
-- a model or model version;
-- a provider account;
-- Overwatch;
-- a terminal or messaging thread;
-- a process ID;
-- a context window.
+The same architectural question applies elsewhere: which part needs cognition, which part needs deterministic execution, and which existing component already owns the capability?
 
-This separation makes replacement and recovery designable. The practical implementation is not perfectly independent yet, but the architecture avoids making incidental runtime choices into permanent identity.
+## Keeping the system small
 
-## Repository model
+WolfPack does not use a persistent hierarchy of named agents. Temporary cognitive workers remain a candidate for narrowly scoped tasks.
 
-WolfPack uses three distinct repository purposes:
-
-1. **Operational authority** — private, locally controlled, and authoritative.
-2. **Private off-machine mirror** — a recovery copy of intended refs; non-authoritative.
-3. **Public representation** — independently initialized and deliberately curated, with no shared operational ancestry.
-
-This prevents publication from becoming a sanitization exercise over sensitive history.
-
-## State classes
-
-- **Public project state:** architecture, design rationale, safe examples, limitations, and roadmap.
-- **Private operational state:** detailed configuration, internal runbooks, and ordinary private project records.
-- **Local-only protected state:** credentials, session databases, cookies, private keys, and machine-specific authentication material.
-
-The classification is based on consequence, not convenience. `.gitignore` is not a security boundary.
-
-## Data and control flow
-
-Interfaces carry Commander intent to XO. XO checks durable context and live facts, invokes permitted tools, and returns verified outcomes. External transports validate and constrain inputs before they reach the supervisory environment. Credentials remain in narrower custody than the general XO process wherever practical.
-
-No network connection, transport, or cloned repository grants authority by itself.
-
-## Deliberate non-components
-
-WolfPack currently avoids introducing infrastructure without demonstrated need, including:
-
-- a persistent multi-agent hierarchy;
-- a message bus;
-- a vector database by default;
-- an orchestration platform;
-- a monitoring stack for appearances;
-- a public control plane;
-- a custom harness where Pi already provides a sufficient primitive.
-
-A component must justify ownership, continuous operation, data custody, permissions, recovery, cost, verification, Commander-workload reduction, and removal pain.
+A new component must justify the problem it solves, the state and permissions it owns, its operating cost, its recovery path, and how it can be removed. See [Design principles](design-principles.md).

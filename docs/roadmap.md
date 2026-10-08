@@ -1,46 +1,41 @@
 # Roadmap
 
-WolfPack's roadmap is evidence-led. Items move from idea to experiment to accepted capability only after a demonstrated need and observable verification.
+WolfPack develops through useful work. A direction becomes an implemented capability when there is a concrete need, a proportionate mechanism, and evidence that it serves the task.
 
-## Operational now
+## The operating foundation
 
-- One persistent XO role hosted through stock Pi on a dedicated runtime.
-- Workstation, portable, mobile, and messaging access to the same XO.
-- Explicit Commander/XO authority boundaries and bounded mission execution.
-- Command-authoritative operational Git with tested independent recovery and a private off-machine mirror.
-- Restricted, correlated messaging for text and files without a public inbound service.
-- Visible, operator-started browser interaction with human-controlled authentication boundaries.
-- Git-backed architecture, status, runbooks, evidence expectations, and historical checkpoints.
-- Real cross-interface mission continuity demonstrated without creating a second XO runtime.
+The project combines a shared assistant runtime, desktop/mobile/messaging interfaces, bounded browser interaction, Git-backed project context, and repository recovery procedures. Real workflows have exercised continuity, delivery, and execution boundaries.
 
-## Partially implemented or experimental
+The public repository explains that work through architecture and selected cases. The private operational environment remains separate.
 
-- Public documentation and architecture are established; safe implementation material will be selected deliberately rather than copied wholesale.
-- Provider and model replaceability is an architectural requirement, but the current live resource pool is intentionally small.
-- Durable state is Git-backed where appropriate, while broader memory requirements remain under study.
-- Browser workflows are bounded and supervised rather than general unattended automation.
-- Economic and reasoning-effort policy exists, but automatic routing has not been implemented.
+## Native systems with a cognitive interface
 
-## Near-term direction
+The Household direction is to keep Home Assistant responsible for household state and scheduling, then evaluate an XO interface for natural-language interpretation and coordination.
 
-1. Curate small implementation examples whose public value exceeds their privacy and maintenance cost.
-2. Publish reproducible verification examples for bounded Git, transport, and recovery claims without exposing operational topology.
-3. Improve continuity and provenance while keeping durable memory portable and understandable.
-4. Evaluate a thin ephemeral-worker experiment using Pi primitives before building custom orchestration.
-5. Continue using real missions as benchmarks, with explicit authority and outcome evidence.
+The broader question applies to other use cases: where does cognition improve the workflow, and where should a deterministic tool simply do its job?
 
-## Longer-term questions
+## Better context and provenance
 
-- What durable memory is actually useful beyond curated Git state?
-- Which tasks benefit from temporary cognitive delegation rather than active XO model switching?
-- How should cost, quota, latency, privacy, and risk influence cognitive-resource selection?
-- Which capabilities should remain operator-started instead of becoming continuous services?
-- What is the smallest recovery design that survives loss of the current runtime without creating secret sprawl?
+Improve the way useful decisions, rationale, and task state survive a conversation without turning every transcript into mandatory memory or introducing opaque storage by default.
 
-## Explicit non-goals
+## Proportionate cognitive resources
 
-- A persistent hierarchy of named autonomous agents.
-- Unattended authority over credentials, account recovery, or destructive operations.
-- Infrastructure introduced only to imitate an enterprise platform.
-- Publishing sensitive operational configuration for the sake of reproducibility.
-- Claiming general autonomy, production readiness, or guarantees the project has not demonstrated.
+Explore selection based on task difficulty, latency, cost, privacy, and risk. Temporary cognitive workers could help with bounded subtasks, but they should use suitable harness primitives rather than require a new persistent agent organization.
+
+Automatic routing and worker delegation remain directions to evaluate.
+
+## Public engineering material
+
+Add small, reproducible examples where they explain a useful mechanism without disclosing deployment details. Prefer standard tools and a clear failure case over a large demonstration stack.
+
+Connect selected use cases to occasional [Signals](https://signalsbyonursiper.substack.com/) essays, so the broader discussion of machine cognition is backed by technical work and lessons.
+
+## What guides the choices
+
+- Does this solve a problem the project actually has?
+- Does an existing component already solve it?
+- What state, authority, and ongoing cost does it add?
+- Does it reduce the owner's workload?
+- Can it be removed, replaced, or recovered without disproportionate pain?
+
+The roadmap describes direction, not a release schedule or standing authorization for external actions.
